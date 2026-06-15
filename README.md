@@ -1,31 +1,33 @@
 # lewrep2 🏎️💨
 
-`lewrep2` is a high-performance, cross-platform CLI text search utility built in Rust that recursively scans directories for patterns with absolute minimal overhead. By leveraging the industry-proven DNA of production-grade engines (`memchr` and `ignore`) and wrapping them in a zero-allocation, memory-mapped chassis, `lewrep2` completely drops traditional initialization bloat to deliver near-instantaneous search results. 
+`lewrep2` is a high-performance, cross-platform CLI text search utility built in Rust that recursively scans directories for patterns with absolute minimal overhead. By leveraging the industry-proven, production-grade ecosystem that powers ripgrep (`grep-searcher`, `grep-regex`, and `ignore`), `lewrep2` drops traditional initialization bloat to deliver near-instantaneous search results.
 
 Engineered to seamlessly handle complex pipelines, it fully supports standard UNIX piping constraints, allowing you to fluidly pass data into and out of core system utilities like `grep`, `ripgrep`, `tree`, `cat`, `ls`, and more.
 
-## 📊 Performance Showdown (`-l` Short-Circuit Search)
+## 📊 Performance Showdown (.txt Scan Rematch)
 
-Measured using high-precision execution telemetry on an Apple Silicon architecture:
+Measured using high-precision execution telemetry (`lewtime`) on an Apple Silicon architecture:
 
-| Metric | `lewrep2` | `ripgrep (rg)` | The Verdict |
+| Metric | lewrep2 | ripgrep (rg) | The Verdict |
 | :--- | :--- | :--- | :--- |
-| **Total Process Time** | **0.057s** | 1.442s | **lewrep2 is ~25x Faster** |
-| **Memory Footprint** | **3.97 MB** | 6.42 MB | **lewrep2 uses almost half the RAM** |
+| **Total Process Time** | 0.052s | 0.068s | `lewrep2` is ~23% Faster on micro-scans |
+| **Memory Footprint** | 2.56 MB | 6.09 MB | `lewrep2` uses less than half the RAM |
 
-### Why is it so fast?
-* **Zero-Copy Architecture:** Uses native OS memory mapping (`Mmap`) to read file streams directly without heavy user-space buffer allocations.
-* **Hardware Acceleration:** Leverages SIMD instruction lanes via `memchr::memmem` to shred through text bytes at absolute hardware limits.
-* **Smart Traversal:** Fully respects `.gitignore` rules and walks directories concurrently using a parallel thread pool.
+## Why is it so fast?
+
+* **Production-Grade Engine Room:** Built directly on top of the `grep-searcher` and `grep-regex` crates—the exact same underlying hardware-accelerated libraries developed to power `ripgrep`.
+* **Zero-Copy Architecture Available:** Utilizes optimized buffer strategies and optional native OS memory mapping (`Mmap`) to stream file chunks efficiently.
+* **Smart Traversal:** Blazes through file structures using the `ignore` crate to automatically respect `.gitignore` rules, concurrently driven by a parallel `rayon` thread pool.
 
 ## 🚀 Features & Flags
+
 * `lewrep2 <pattern> [path]` - Standard blazing fast search.
 * `-i`, `--ignore-case` - Case-insensitive matching.
 * `-n`, `--line-number` - Displays specific line number locations for hits.
 * `-v`, `--invert-match` - Inverts the search (selects non-matching lines).
-* `-l` - Filenames-only short-circuit mode (exits the millisecond a match is found).
+* `-l` - Filenames-only short-circuit mode (exits the millisecond a match is found in a file).
 * `-I` - Explicit ignore configurations / overrides.
-* `-A` - Context control (displays lines trailing after a match match).
+* `-A` - Context control (displays lines trailing after a match).
 
 ## 🐛 Bug Reports
 
@@ -36,9 +38,10 @@ If there is a bug in the code that I've missed or that you notice while running 
 Got feature requests, optimizations, or ideas to make `lewrep2` even faster? Feel free to open a GitHub Issue or submit a Pull Request. Open-source feedback is highly encouraged!
 
 ## 📄 License
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-Developed with 🦀 by [xlewis1](https://github.com/xlewis1).
+This project is licensed under the MIT License - see the `LICENSE` file for details.
+
+Developed with 🦀 by **xlewis1**.
 
 ## 🛠️ Installation & Building
 
