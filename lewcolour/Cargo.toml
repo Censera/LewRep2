@@ -1,0 +1,8 @@
+[package]
+name = "lewcolour"
+version = "0.1.0"
+edition = "2024"
+description = "Fast, zero-allocation terminal colour crate for LewRep2 and friends."
+authors = ["Moondust"]
+
+[dependencies]
